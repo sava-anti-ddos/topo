@@ -37,8 +37,12 @@ class ReflectionAttackTopo(Topo):
         # define all hosts we need, h[0] is not used
         hosts = [0] * (TOPO_TOTAL_HOSTS+1)
         logger.info("Add hosts")
-        for i in range(1, TOPO_TOTAL_HOSTS+1):
+        for i in range(1, 4):
             hosts[i] = self.addHost('h{}'.format(i))
+        for i in range(5, TOPO_TOTAL_HOSTS+1):
+            hosts[i] = self.addHost('h{}'.format(i))
+        # add host 4, not in namespace
+        hosts[4] = self.addHost('h4', inNamespace=False)
 
         # define all routers we need, r[0] is not used
         logger.info("Add routers")
@@ -118,9 +122,13 @@ class ReflectionAttackNet(Mininet):
         self.h[1].setDefaultRoute('via 50.50.10.1')
         self.h[2].setDefaultRoute('via 20.20.30.1')
         self.h[3].setDefaultRoute('via 20.20.60.1')
-        self.h[4].setDefaultRoute('via 30.30.10.1')
         self.h[5].setDefaultRoute('via 40.40.10.1')
         self.h[6].setDefaultRoute('via 20.20.70.1')
+        logger.info("Set up host 4's route")
+        # set up host 4's route
+        mininet_networks = ['20.20.0.0/16', '30.30.0.0/16', '40.40.0.0/16', '50.50.0.0/16']
+        for network in mininet_networks:
+            self.h[4].cmd(f'ip route add {network} via 30.30.10.1')
 
         logger.info("Start sshd")
         # start sshd
