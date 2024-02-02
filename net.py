@@ -84,7 +84,7 @@ class ReflectionAttackNet(Mininet):
             rp_disable(self.r[i])
 
         # set up host's default route
-        self.h[1].setDefaultRoute('via 10.10.10.1')
+        self.h[1].setDefaultRoute('via 50.50.10.1')
         self.h[2].setDefaultRoute('via 20.20.30.1')
         self.h[3].setDefaultRoute('via 20.20.60.1')
         self.h[4].setDefaultRoute('via 30.30.10.1')
@@ -126,8 +126,8 @@ class ReflectionAttackNet(Mininet):
 
     def config_ip(self):
         # set up routers IP addresses
-        self.r[1].setIP('10.10.10.1/24', intf='r1-eth0')
-        self.r[1].setIP('10.10.0.1/24', intf='r1-eth1')
+        self.r[1].setIP('50.50.10.1/24', intf='r1-eth0')
+        self.r[1].setIP('50.50.0.1/24', intf='r1-eth1')
         self.r[2].setIP('20.20.30.1/24', intf='r2-eth0')
         self.r[2].setIP('20.20.20.2/24', intf='r2-eth1')
         self.r[3].setIP('20.20.20.1/24', intf='r3-eth0')
@@ -139,7 +139,7 @@ class ReflectionAttackNet(Mininet):
         self.r[5].setIP('20.20.40.2/24', intf='r5-eth1')
         self.r[6].setIP('20.20.10.1/24', intf='r6-eth0')
         self.r[6].setIP('20.20.40.1/24', intf='r6-eth1')
-        self.r[6].setIP('10.10.0.2/24', intf='r6-eth2')
+        self.r[6].setIP('50.50.0.2/24', intf='r6-eth2')
         self.r[6].setIP('20.20.0.1/24', intf='r6-eth3')
         self.r[7].setIP('30.30.10.1/24', intf='r7-eth0')
         self.r[7].setIP('20.20.0.2/24', intf='r7-eth1')
@@ -147,7 +147,7 @@ class ReflectionAttackNet(Mininet):
         self.r[8].setIP('40.40.10.1/24', intf='r8-eth0')
         self.r[8].setIP('30.30.0.2/24', intf='r8-eth1')
         # set up hosts IP addresses
-        self.h[1].setIP('10.10.10.10/24', intf='h1-eth0')
+        self.h[1].setIP('50.50.10.10/24', intf='h1-eth0')
         self.h[2].setIP('20.20.30.10/24', intf='h2-eth0')
         self.h[3].setIP('20.20.60.10/24', intf='h3-eth0')
         self.h[4].setIP('30.30.10.10/24', intf='h4-eth0')
