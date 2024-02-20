@@ -1,3 +1,3 @@
-- net.py: 实验网络的封装
-- main.py: net.py的使用示例
-- conf/: 包含每个router路由协议的配置文件
+- net.py: labs topo
+- main.py: net.py usage
+- conf/: each router BGP and OSPF config

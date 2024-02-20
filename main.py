@@ -1,16 +1,21 @@
 import net
-# 修改为conf文件夹的绝对路径
-net.CONF_PREFIX = '/home/mininet/codebase/sav-d/conf'
-
+import os
 from net import ReflectionAttackNet
 from mininet.cli import CLI
+from log import get_logger
 
-# 在项目根目录运行
+logger = get_logger(__name__)
+
+# current directory
+current_dir = os.getcwd()
+net.CONF_PREFIX = os.path.join(current_dir, 'conf')
+logger.info(f"net.CONF_PREFIX = " + net.CONF_PREFIX)
+
+# run at the project root path
 if __name__ == '__main__':
     net = ReflectionAttackNet()
     net.start()
     net.cmd('h6', 'sudo python3 -m http.server 80 &')
     net.cmd('h4', 'sudo python3 -m http.server 80 &')
-    # net.cmd('r6', 'sudo python sniff.py &')
     CLI(net)
     net.stop()
