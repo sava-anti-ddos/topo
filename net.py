@@ -17,7 +17,7 @@
                       
 """
 
-from mininet.net import Mininet
+from mininet.net import Mininet,NAT
 from mininet.node import Node
 from mininet.topo import Topo
 import os
@@ -77,6 +77,10 @@ class ReflectionAttackTopo(Topo):
         self.addLink(routers[7], routers[8], intfName1 = 'eth2', intfName2 = 'eth1')
         logger.info("router7 <----> router8")
 
+        nat = self.addNode('nat', cls=NAT, ip='10.0.0.1/24', inNamespace=False)
+        self.addLink(hosts[4], nat, intfname1='h4-eth1', intfname2='nat-eth0')
+
+
 class ReflectionAttackNet(Mininet):
     def __init__(self):
         super(ReflectionAttackNet, self).__init__(controller=None, 
@@ -112,7 +116,7 @@ class ReflectionAttackNet(Mininet):
             self.r[i].cmd('sysctl net.ipv4.ip_forward=1')
             # disable rp_filter ?
             rp_disable(self.r[i])
-        
+
         logger.info("Set up host's default route")
         # set up host's default route
         self.h[1].setDefaultRoute('via 50.50.10.1')
@@ -121,6 +125,12 @@ class ReflectionAttackNet(Mininet):
         self.h[4].setDefaultRoute('via 30.30.10.1')
         self.h[5].setDefaultRoute('via 40.40.10.1')
         self.h[6].setDefaultRoute('via 20.20.70.1')
+
+        self.h[4].cmd('echo "nameserver 8.8.8.8" > /etc/resolv.conf')
+        self.h[4].cmd('echo "1 out-nat" >> /etc/iproute2/rt_tables')
+        self.h[4].cmd('ip rule add from 10.0.0.2 table out-nat')
+        self.h[4].cmd('ip route add default via 10.0.0.1 dev h4-eth1 table out-nat')
+
 
         logger.info("Start sshd")
         # start sshd
@@ -198,6 +208,8 @@ class ReflectionAttackNet(Mininet):
         self.h[4].setIP('30.30.10.10/24', intf='h4-eth0')
         self.h[5].setIP('40.40.10.10/24', intf='h5-eth0')
         self.h[6].setIP('20.20.70.10/24', intf='h6-eth0')
+
+        self.h[4].setIP('10.0.0.2/24', intf='h4-eth1')
 
 def start_zebra(r : Node):
     name = '{}'.format(r)
