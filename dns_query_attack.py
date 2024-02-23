@@ -98,8 +98,10 @@ if __name__ == "__main__":
     if not os.path.exists(os.path.dirname(DNS_QUERIES_FILE)):
         os.makedirs(os.path.dirname(DNS_QUERIES_FILE))
 
-    with open(DNS_QUERIES_FILE, "w") as f:
-        f.write("time,query_size,victim_ip,dns_server,query_domain,query_type\n")
+    with open(DNS_QUERIES_FILE, "a") as f:
+        # write the header if the file is empty
+        if os.stat(DNS_QUERIES_FILE).st_size == 0:
+            f.write("time,query_size,victim_ip,dns_server,query_domain,query_type\n")
         while not QUEUE.empty():
             query = QUEUE.get()
             f.write(f"{query['time']},{query['query_size']},{query['victim_ip']},{query['dns_server']},{query['query_domain']},{query['query_type']}\n")

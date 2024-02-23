@@ -46,8 +46,10 @@ def signal_handler(sig, frame):
     if not os.path.exists(os.path.dirname(DNS_RESPONSES_FILE)):
         os.makedirs(os.path.dirname(DNS_RESPONSES_FILE))
 
-    with open('audit/dns_responses.csv', 'w') as f:
-        f.write('time,response_size,query_name,query_type,source_ip,destination_ip,source_port,destination_port\n')
+    with open('audit/dns_responses.csv', 'a') as f:
+        # write the header if the file is empty
+        if os.stat(DNS_RESPONSES_FILE).st_size == 0:
+            f.write('time,response_size,query_name,query_type,source_ip,destination_ip,source_port,destination_port\n')
         for response in DNS_RESPONSES:
             f.write('{},{},{},{},{},{},{},{}\n'.format(
                 response['time'], response['response_size'], response['query_name'], response['query_type'],

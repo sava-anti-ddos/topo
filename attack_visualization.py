@@ -37,8 +37,15 @@ dns_responses_grouped = dns_responses.groupby('time').agg(
     responses_total_size=('response_size', 'sum')
 ).reset_index()
 
+# Fill in the missing seconds
+min_start_time = min(dns_queries_grouped['time'].min(), dns_responses_grouped['time'].min())
+max_end_time = max(dns_queries_grouped['time'].max(), dns_responses_grouped['time'].max())
+complete_time_range = pd.date_range(start=min_start_time, end=max_end_time, freq='S')
+dns_queries_grouped = dns_queries_grouped.set_index('time').reindex(complete_time_range).fillna(0).reset_index(names='time')
+dns_responses_grouped = dns_responses_grouped.set_index('time').reindex(complete_time_range).fillna(0).reset_index(names='time')
+
 # Plot query bytes and response bytes per second over time
-fig, ax = plt.subplots(figsize=(12, 6))
+fig, ax = plt.subplots(figsize=(len(dns_queries_grouped) * 0.2, 6))
 ax.plot(dns_queries_grouped['time'], dns_queries_grouped['queries_total_size'], 
         label='Query', linewidth=1, color='blue', 
         marker='o', markersize=4, markerfacecolor='blue', markeredgecolor='blue')

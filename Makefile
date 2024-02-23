@@ -42,18 +42,29 @@ run:
 install:
 	@echo "Installing the project..."
 
-
 help:
 	@echo "make deps		install dependencies"
 	@echo "make help		display this help message"
 	@echo "make run		run the project"
 	@echo "make visu		visualize the attack"
+	@echo "make attack		launch DNS reflection attack(run at h2)"
+	@echo "make audit		audit DNS reflection attack(run at h5)"
 	@echo "make clean		clean the project"
 
 visu:
 	@echo "Visualizing the attack..."
-	@echo "Needs root privileges to run the project"
+	@echo "Needs root privileges to run"
 	sudo python3 attack_visualization.py
+
+attack:
+	@echo "Launching DNS reflection attack...(run this at h2)"
+	@echo "Needs root privileges to run"
+	sudo python3 attack.py
+
+audit:
+	@echo "Auditing DNS reflection attack...(run this at h5)"
+	@echo "Needs root privileges to run"
+	sudo python3 audit.py
 
 deps:
 	@echo "Installing dependencies..."
