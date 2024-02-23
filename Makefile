@@ -59,12 +59,12 @@ visu:
 attack:
 	@echo "Launching DNS reflection attack...(run this at h2)"
 	@echo "Needs root privileges to run"
-	sudo python3 attack.py
+	sudo python3 dns_query_attack.py
 
 audit:
 	@echo "Auditing DNS reflection attack...(run this at h5)"
 	@echo "Needs root privileges to run"
-	sudo python3 audit.py
+	sudo python3 dns_response_audit.py
 
 deps:
 	@echo "Installing dependencies..."
