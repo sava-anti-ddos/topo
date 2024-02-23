@@ -51,6 +51,6 @@
      sudo systemctl restart dnsmasq
      ```
 
-- Addition Python packages:
+- Additional Python packages:
 
   - scapy

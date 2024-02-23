@@ -15,7 +15,5 @@ logger.info(f"net.CONF_PREFIX = " + net.CONF_PREFIX)
 if __name__ == '__main__':
     net = ReflectionAttackNet()
     net.start()
-    net.cmd('h6', 'sudo python3 -m http.server 80 &')
-    net.cmd('h4', 'sudo python3 -m http.server 80 &')
     CLI(net)
     net.stop()
