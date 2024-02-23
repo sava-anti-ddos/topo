@@ -53,6 +53,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 if __name__ == "__main__":
+    # handle Ctrl+C to print the audit results and save the DNS responses to a file
     signal.signal(signal.SIGINT, signal_handler)
 
     sniff(prn=attack_audit, filter="udp", store=0)
