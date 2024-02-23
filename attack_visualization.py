@@ -29,10 +29,10 @@ ax.plot(dns_queries_grouped['time'], dns_queries_grouped['queries_total_size'], 
 ax.fill_between(dns_queries_grouped['time'], dns_queries_grouped['queries_total_size'], color='blue', alpha=0.1)
 ax.plot(dns_responses_grouped['time'], dns_responses_grouped['responses_total_size'], label='Response', linewidth=1, color='orange')
 ax.fill_between(dns_responses_grouped['time'], dns_responses_grouped['responses_total_size'], color='orange', alpha=0.1)
-ax.set_xlabel('Time')
-ax.set_ylabel('Bytes per second')
+ax.set_xlabel('Time (Minute:Second)')
+ax.set_ylabel('Bytes Per Second')
 ax.set_title('Query bytes and response bytes per second over time')
-# ax.legend(loc='upper right')
+ax.legend(loc='upper right')
 
 # set the ticks
 # x: min - 5s, max + 5s, step 2s

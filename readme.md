@@ -2,7 +2,15 @@
 
 - net.py: labs topo
 
+- log.py: custom logger
+
 - main.py: net.py usage
+
+- dns_query_attack.py: dns reflection attack simulation using multiple threads
+
+- dns_response_audit.py: dns reflection attack victim side audit
+
+- attack_visualization.py: dns reflection attack visualization
 
 - conf/: each router BGP and OSPF config
 
@@ -54,3 +62,5 @@
 - Additional Python packages:
 
   - scapy
+  - pandas
+  - matplotlib
