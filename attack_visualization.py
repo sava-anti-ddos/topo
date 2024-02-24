@@ -45,7 +45,7 @@ dns_queries_grouped = dns_queries_grouped.set_index('time').reindex(complete_tim
 dns_responses_grouped = dns_responses_grouped.set_index('time').reindex(complete_time_range).fillna(0).reset_index(names='time')
 
 # Plot query bytes and response bytes per second over time
-fig, ax = plt.subplots(figsize=(len(dns_queries_grouped) * 0.2, 6))
+fig, ax = plt.subplots(figsize=(max(len(dns_queries_grouped) * 0.2, 12), 6))
 ax.plot(dns_queries_grouped['time'], dns_queries_grouped['queries_total_size'], 
         label='Query', linewidth=1, color='blue', 
         marker='o', markersize=4, markerfacecolor='blue', markeredgecolor='blue')
@@ -61,8 +61,8 @@ ax.legend(loc='upper right')
 
 # set the ticks
 # x: min - 5s, max + 5s, step 5s
-ax.set_xticks(np.arange(dns_queries_grouped['time'].min() - pd.Timedelta('5s'), 
-                        dns_responses_grouped['time'].max() + pd.Timedelta('5s'), pd.Timedelta('5s')))
+ax.set_xticks(np.arange(min_start_time - pd.Timedelta('5s'), 
+                        max_end_time + pd.Timedelta('5s'), pd.Timedelta('5s')))
 
 ax.set_ylim(0, max(dns_queries_grouped['queries_total_size'].max(), 
                    dns_responses_grouped['responses_total_size'].max()) + 6000)
