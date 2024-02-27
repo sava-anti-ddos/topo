@@ -12,6 +12,8 @@
 
 - attack_visualization.py: dns reflection attack visualization
 
+- random_http_request.py: background traffic simulation
+
 - conf/: each router BGP and OSPF config
 
 ## Requirements
