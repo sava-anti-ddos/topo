@@ -3,11 +3,25 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import os
+import sys
 
+DNS_QUIRES_FILE = 'audit/dns_queries.csv'
+DNS_RESPONSES_FILE = 'audit/dns_responses.csv'
+VISUALIZATION_FILE = 'audit/attack_visualization.png'
+
+# check if the files exists
+if not os.path.exists(DNS_QUIRES_FILE) or not os.path.exists(DNS_RESPONSES_FILE):
+    print('The quires or responses file does not exist. Please run the audit and attack first.')
+    sys.exit(1)
 
 # Load the data
-dns_queries = pd.read_csv('audit/dns_queries.csv')
-dns_responses = pd.read_csv('audit/dns_responses.csv')
+try:
+    dns_queries = pd.read_csv(DNS_QUIRES_FILE)
+    dns_responses = pd.read_csv(DNS_RESPONSES_FILE)
+except Exception as e:
+    print('Error: ', e)
+    sys.exit(1)
 
 # Count the number of queries and total query bytes for each second
 dns_queries['time'] = pd.to_datetime(dns_queries['time'], unit='s').dt.floor('S')
@@ -39,13 +53,13 @@ ax.set_title('Query Bps and response Bps over time')
 ax.legend(loc='upper right')
 
 # set the ticks
-# x: min - 5s, max + 5s, step 2s
+# x: min - 5s, max + 5s, step 5s
 ax.set_xticks(np.arange(dns_queries_grouped['time'].min() - pd.Timedelta('5s'), 
                         dns_responses_grouped['time'].max() + pd.Timedelta('5s'), pd.Timedelta('5s')))
 
 ax.set_ylim(0, max(dns_queries_grouped['queries_total_size'].max(), 
                    dns_responses_grouped['responses_total_size'].max()) + 6000)
-# y: 0, max + 1000, step 1000
+# y: 0, max + 6000Bps, step 2000Bps
 ax.set_yticks(np.arange(0, max(dns_queries_grouped['queries_total_size'].max(), 
                                dns_responses_grouped['responses_total_size'].max()) + 6000, 2000))
 
@@ -61,5 +75,9 @@ ax.yaxis.grid(color='gray', linewidth=0.2)
 # ax.get_xaxis().get_major_ticks()[0].set_visible(False)
 
 # save the plot to a file
-plt.savefig('audit/attack_visualization.png')
+dirpath = os.path.dirname(VISUALIZATION_FILE)
+if not os.path.exists(dirpath):
+    os.makedirs(dirpath)
+plt.savefig(VISUALIZATION_FILE)
+print(f'Attack visualization saved to {VISUALIZATION_FILE}')
 

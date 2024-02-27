@@ -103,3 +103,4 @@ if __name__ == "__main__":
         while not QUEUE.empty():
             query = QUEUE.get()
             f.write(f"{query['time']},{query['query_size']},{query['victim_ip']},{query['dns_server']},{query['query_domain']},{query['query_type']}\n")
+        print(f"DNS queries log saved to {DNS_QUERIES_FILE}")

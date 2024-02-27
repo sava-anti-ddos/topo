@@ -16,6 +16,8 @@
 
 - conf/: each router BGP and OSPF config
 
+- requirements.txt: required python packages
+
 ## Requirements
 
 - mininet

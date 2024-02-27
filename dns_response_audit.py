@@ -52,6 +52,7 @@ def signal_handler(sig, frame):
             f.write('{},{},{},{},{},{},{},{}\n'.format(
                 response['time'], response['response_size'], response['query_name'], response['query_type'],
                 response['source_ip'], response['destination_ip'], response['source_port'], response['destination_port']))
+        print(f"DNS responses saved to {DNS_RESPONSES_FILE}")
     sys.exit(0)
 
 if __name__ == "__main__":

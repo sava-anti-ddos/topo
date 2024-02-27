@@ -35,4 +35,4 @@ if __name__ == '__main__':
             # send http request to the target
             send_http_request(f'http://{target}')
             # random sleep
-            time.sleep(random.randint(1, 5))
+            time.sleep(random.randint(1, 20))

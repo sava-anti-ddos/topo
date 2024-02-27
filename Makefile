@@ -47,7 +47,13 @@ help:
 	@echo "make deps		install dependencies"
 	@echo "make help		display this help message"
 	@echo "make run		run the project"
+	@echo "make visu		visualize the attack"
 	@echo "make clean		clean the project"
+
+visu:
+	@echo "Visualizing the attack..."
+	@echo "Needs root privileges to run the project"
+	sudo python3 attack_visualization.py
 
 deps:
 	@echo "Installing dependencies..."
@@ -56,6 +62,10 @@ deps:
 # install python3
 	@echo -e "\033[32mInstalling python3 enviornment\033[0m"
 	sudo apt install python3 python-is-python3 python3-pip -y
+
+# install python packages
+	@echo -e "\033[32mInstalling python packages\033[0m"
+	sudo pip3 install -r requirements.txt
 
 # install mininet
 	@echo -e "\033[32mInstalling mininet enviornment\033[0m"
@@ -80,6 +90,10 @@ clean_deps:
 # remove python3
 	@echo -e "\033[32mRemoving python3 enviornment\033[0m"
 	sudo apt remove python3 python-is-python3 python3-pip -y
+
+# remove python packages
+	@echo -e "\033[32mRemoving python packages\033[0m"
+	sudo pip3 uninstall -r requirements.txt
 
 # remove mininet
 	@echo -e "\033[32mRemoving mininet enviornment\033[0m"
