@@ -22,6 +22,13 @@
 
   - Install mininet follow the [official website](https://mininet.org/download/), VM installation is recommended. 
 
+  - or, install mininet using apt:
+
+    ```
+    sudo apt install mininet
+    ```
+
+
 - quagga
 
   - Install quagga:
