@@ -15,7 +15,12 @@ logger.info(f"net.CONF_PREFIX = " + net.CONF_PREFIX)
 if __name__ == '__main__':
     net = ReflectionAttackNet()
     net.start()
-    net.cmd('h6', 'sudo python3 -m http.server 80 &')
-    net.cmd('h4', 'sudo python3 -m http.server 80 &')
+    # start http server at h1-h5
+    for i in [1, 2, 3, 4, 5]:
+        net.cmd('h{}'.format(i), 'python3 -m http.server 80 &')
+    # start http client at h1-h5
+    for i in [1, 2, 3, 4, 5]:
+        host_ip = net.get('h{}'.format(i)).IP()
+        net.cmd('h{}'.format(i), 'python3 random_http_request.py {} &'.format(host_ip))
     CLI(net)
     net.stop()
