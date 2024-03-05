@@ -17,10 +17,10 @@ if __name__ == '__main__':
     net.start()
     # start http server at h5
     for i in [5]:
-        net.cmd('h{}'.format(i), 'sudo python3 http_server.py &')
+        net.cmd('h{}'.format(i), 'sudo python3 -u -m http.server 80 > log/httpd.log 2>&1 &')
     # start http client at h1-h5
     for i in [1, 2, 3, 4]:
-        host_ip = net.get('h{}'.format(i)).IP()
-        net.cmd('h{}'.format(i), 'sudo python3 random_http_request.py {} &'.format(host_ip))
+        start_delay = i
+        net.cmd('h{}'.format(i), 'sudo python3 random_http_request.py {} &'.format(i))
     CLI(net)
     net.stop()

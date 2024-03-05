@@ -77,7 +77,7 @@ ax.plot(normal_traffic_grouped['time'], normal_traffic_grouped['total_size'],
 
 ax.set_xlabel('Time (Minute:Second)')
 ax.set_ylabel('Bytes Per Second')
-ax.set_title('Query Bps and response Bps over time')
+ax.set_title('Traffic Monitoring')
 ax.legend(loc='upper right')
 
 # set the ticks

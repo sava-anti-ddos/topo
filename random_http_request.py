@@ -1,4 +1,4 @@
-# each host send http requests to the other hosts, and wait a random time before sending the next request
+# send http request to the target forever
 
 import random
 import time
@@ -16,19 +16,16 @@ def send_http_request(target):
 if __name__ == '__main__':
     # check the param
     if len(sys.argv) != 2:
-        print('Usage: python3 random_http_request.py <self_ip>')
+        print('Usage: python3 random_http_request.py <start_delay>')
         sys.exit(1)
 
-    # self ip
-    self_ip = sys.argv[1]
+    start_delay = sys.argv[1]
+    time.sleep(int(start_delay))
     # target list
-    targets = ['40.40.10.10',]
+    target = '40.40.10.10'
     # loop forever
     while True:
-        # random pick a target except self
-        target = random.choice(targets)
-        if target != self_ip:
-            # send http request to the target
-            send_http_request(f'http://{target}')
-            # random sleep
-            time.sleep(random.randint(1, 1))
+        # send http request to the target
+        send_http_request(f'http://{target}')
+        # random sleep
+        time.sleep(random.randint(1, 1))
