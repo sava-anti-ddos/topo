@@ -6,18 +6,47 @@ import matplotlib.pyplot as plt
 import os
 import sys
 
-DNS_QUIRES_FILE = 'audit/dns_queries.csv'
+DNS_QUIRES_FILE_PREFIX = 'audit/dns_queries'
 AUDIT_TRAFFIC_FILE = 'audit/audit_traffic.csv'
 VISUALIZATION_FILE = 'audit/attack_visualization.png'
 
+def check_files_with_prefix(prefix):
+    # Get all files in the directory
+    directory = os.path.dirname(prefix)
+    files = os.listdir(directory)
+    file_prefix = os.path.basename(prefix)
+    
+    # Check if any file starts with the prefix
+    for file in files:
+        if file.startswith(file_prefix):
+            return True
+    
+    return False
+
+def load_all_queries(prefix):
+    # Get all files in the directory
+    file_prefix = os.path.basename(prefix)
+    dir_name = os.path.dirname(prefix)
+    files = os.listdir(dir_name)
+    
+    # Load all the queries
+    all_queries = []
+    for file in files:
+        if file.startswith(file_prefix):
+            queries_by_host = pd.read_csv(os.path.join(dir_name, file))
+            all_queries.append(queries_by_host)
+    
+    # concat and sort by time
+    return pd.concat(all_queries).sort_values(by='time')
+
 # check if the files exists
-if not os.path.exists(DNS_QUIRES_FILE) or not os.path.exists(AUDIT_TRAFFIC_FILE):
+if not check_files_with_prefix(DNS_QUIRES_FILE_PREFIX) or not os.path.exists(AUDIT_TRAFFIC_FILE):
     print('The quires or responses file does not exist. Please run the audit and attack first.')
     sys.exit(1)
 
 # Load the data
 try:
-    dns_queries = pd.read_csv(DNS_QUIRES_FILE)
+    dns_queries = load_all_queries(DNS_QUIRES_FILE_PREFIX)
     audit_traffic = pd.read_csv(AUDIT_TRAFFIC_FILE)
     dns_queries['time'] = pd.to_datetime(dns_queries['time'], unit='s').dt.floor('S')
     audit_traffic['time'] = pd.to_datetime(audit_traffic['time'], unit='s').dt.floor('S')
@@ -66,9 +95,9 @@ ax.plot(dns_responses_grouped['time'], dns_responses_grouped['responses_total_si
         label='Response', linewidth=1, color='red',
         marker='v', markersize=4, markerfacecolor='red', markeredgecolor='red')
 
-ax.plot(audit_traffic_grouped['time'], audit_traffic_grouped['total_size'], 
-        label='Total', linewidth=1, color='grey', 
-        marker='s', markersize=4, markerfacecolor='grey', markeredgecolor='grey')
+# ax.plot(audit_traffic_grouped['time'], audit_traffic_grouped['total_size'], 
+#         label='Total', linewidth=1, color='grey', 
+#         marker='s', markersize=4, markerfacecolor='grey', markeredgecolor='grey')
 
 ax.plot(normal_traffic_grouped['time'], normal_traffic_grouped['total_size'],
         label='Normal', linewidth=1, color='green',
