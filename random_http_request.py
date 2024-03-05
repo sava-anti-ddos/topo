@@ -8,7 +8,7 @@ import sys
 # send http request to the target
 def send_http_request(target):
     try:
-        response = requests.get(target)
+        response = requests.get(target, timeout=3)
         print(response)
     except Exception as e:
         print(e)

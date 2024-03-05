@@ -20,6 +20,7 @@
 from mininet.net import Mininet
 from mininet.node import Node
 from mininet.topo import Topo
+from mininet.link import TCLink
 import os
 from log import get_logger
 
@@ -60,7 +61,7 @@ class ReflectionAttackTopo(Topo):
         logger.info("host3 <----> router4")
         self.addLink(hosts[4], routers[7], intfName1 = 'h4-eth0', intfName2 = 'eth0')
         logger.info("host4 <----> router7")
-        self.addLink(hosts[5], routers[8], intfName1 = 'h5-eth0', intfName2 = 'eth0', bw=0.05) # set bandwidth to 0.05Mbps
+        self.addLink(hosts[5], routers[8], intfName1 = 'h5-eth0', intfName2 = 'eth0', cls=TCLink, bw=0.1) # set bandwidth to 0.1Mbps
         logger.info("host5 <----> router8")
         self.addLink(hosts[6], routers[3], intfName1 = 'h6-eth0', intfName2 = 'eth2')
         logger.info("host6 <----> router3")
