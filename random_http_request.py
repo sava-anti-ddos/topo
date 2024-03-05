@@ -15,12 +15,13 @@ def send_http_request(target):
 
 if __name__ == '__main__':
     # check the param
-    if len(sys.argv) != 2:
-        print('Usage: python3 random_http_request.py <start_delay>')
+    if len(sys.argv) != 3:
+        print('Usage: python3 random_http_request.py <start_delay> <interval>')
         sys.exit(1)
 
     start_delay = sys.argv[1]
-    time.sleep(int(start_delay))
+    interval = sys.argv[2]
+    time.sleep(float(start_delay))
     # target list
     target = '40.40.10.10'
     # loop forever
@@ -28,4 +29,4 @@ if __name__ == '__main__':
         # send http request to the target
         send_http_request(f'http://{target}')
         # random sleep
-        time.sleep(random.randint(1, 1))
+        time.sleep(float(interval))
