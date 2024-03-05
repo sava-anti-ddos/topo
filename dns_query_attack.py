@@ -14,9 +14,9 @@ import os
 
 
 # Number of threads to use
-NUM_THREADS = 40
+NUM_THREADS = 20
 # Number of DNS queries to send per thread
-NUM_QUERIES = 40
+NUM_QUERIES = 50
 # The source IP address to use
 SRC_IP = "40.40.10.10"
 # The DNS server to send the queries to
