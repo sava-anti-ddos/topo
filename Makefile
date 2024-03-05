@@ -4,6 +4,8 @@
 SHELL		= /bin/bash
 HOME 		= $(shell echo $$HOME)
 
+.PHONY: all clean run install help visu attack audit clean_audit deps clean_deps
+
 default: help
 
 # Target: all
@@ -65,6 +67,11 @@ audit:
 	@echo "Auditing DNS reflection attack...(run this at h5)"
 	@echo "Needs root privileges to run"
 	sudo python3 dns_response_audit.py
+
+clean_audit:
+	@echo "Cleaning audit files..."
+	@echo "Needs root privileges to clean audit"
+	sudo rm -rf audit
 
 deps:
 	@echo "Installing dependencies..."

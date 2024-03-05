@@ -22,11 +22,7 @@ if __name__ == '__main__':
     # self ip
     self_ip = sys.argv[1]
     # target list
-    targets = ['50.50.10.10',
-               '20.20.30.10',
-               '20.20.60.10',
-               '30.30.10.10',
-               '40.40.10.10',]
+    targets = ['40.40.10.10',]
     # loop forever
     while True:
         # random pick a target except self
@@ -35,4 +31,4 @@ if __name__ == '__main__':
             # send http request to the target
             send_http_request(f'http://{target}')
             # random sleep
-            time.sleep(random.randint(1, 20))
+            time.sleep(random.randint(1, 3))

