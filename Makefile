@@ -64,9 +64,14 @@ attack:
 	sudo python3 dns_query_attack.py $(host)
 
 audit:
-	@echo "Auditing DNS reflection attack...(run this at h5)"
+	@echo "Auditing DNS reflection attack(Response)...(run this at h5)"
 	@echo "Needs root privileges to run"
 	sudo python3 dns_response_audit.py
+
+query_audit:
+	@echo "Auditing DNS reflection attack(Query)..."
+	@echo "Needs root privileges to run"
+	sudo python3 dns_query_audit.py
 
 clean_audit:
 	@echo "Cleaning audit files..."

