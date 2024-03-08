@@ -26,14 +26,14 @@ def audit(pkt):
 
         # record the DNS query
         DNS_PACKETS_COUNTER += 1
-        DNS_BYTES_COUNTER += len(pkt)
-        PACKETS.append({'time': time.time(), 'packet_size': len(pkt), 
+        DNS_BYTES_COUNTER += len(pkt[IP])
+        PACKETS.append({'time': time.time(), 'packet_size': len(pkt[IP]), 
                               'source_ip': pkt[IP].src, 'destination_ip': pkt[IP].dst, 
                               'protocol': pkt[IP].proto,
                               'tag': 'DNS_QUERY'})
         
         print("DNS query count: {}, bytes: {}, total bytes: {}"
-              .format(DNS_PACKETS_COUNTER, len(pkt), DNS_BYTES_COUNTER))
+              .format(DNS_PACKETS_COUNTER, len(pkt[IP]), DNS_BYTES_COUNTER))
 
 
 # handle Ctrl+C to print the audit results and save the DNS responses to a file
@@ -60,4 +60,4 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
 
     # sniff inbound traffic
-    sniff(prn=audit, filter='inbound', store=0)
+    sniff(prn=audit, filter='inbound', iface='eth1', store=0)
