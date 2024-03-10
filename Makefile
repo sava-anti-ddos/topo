@@ -51,7 +51,9 @@ help:
 	@echo "make visu		visualize the attack"
 	@echo "make attack		launch DNS reflection attack"
 	@echo "make audit		audit DNS reflection attack(run at h5)"
+	@echo "make query_audit	audit DNS reflection attack(Query)"
 	@echo "make clean		clean the project"
+	@echo "make clean_audit	clean generated audit files and visualization image"
 
 visu:
 	@echo "Visualizing the attack..."
