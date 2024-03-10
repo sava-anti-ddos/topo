@@ -60,4 +60,4 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
 
     # sniff inbound traffic
-    sniff(prn=audit, filter='inbound', iface='eth1', store=0)
+    sniff(prn=audit, filter='inbound', iface='h4-eth0', store=0)
