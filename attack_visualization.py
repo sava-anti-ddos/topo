@@ -89,7 +89,7 @@ for name, df in grouped_data.items():
 fig, ax = plt.subplots(figsize=(max(len(complete_time_range) * 0.2, 12), 6))
 
 plot_option_map = {
-    'dns_queries': {'label': 'Attack Traffic - h2', 'color': 'blue', 'marker': 'o'},
+    'dns_queries': {'label': 'Attack Traffic - h2,h3', 'color': 'blue', 'marker': 'o'},
     'audit_dns_responses': {'label': 'Amplified Traffic - h5', 'color': 'red', 'marker': 'v'},
     'audit_normal_traffic': {'label': 'Normal Traffic - h5', 'color': 'green', 'marker': 'x'},
     'audit_query_traffic': {'label': 'Attack Traffic - r7', 'color': 'orange', 'marker': 'o'},
