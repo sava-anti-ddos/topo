@@ -10,7 +10,7 @@ from scapy.sendrecv import send
 
 DNS_SERVER = "30.30.10.10"
 
-QUERY_DOMAIN_OPTIONS = ["www.baid.com", "www.google.com", "www.bilibili.com", "www.bing.com"]
+QUERY_DOMAIN_OPTIONS = ["www.baidu.com", "www.google.com", "www.bilibili.com", "www.bing.com"]
 QUERY_TYPE = 'A'
 
 def send_dns_request(dns_server, domain, type):
