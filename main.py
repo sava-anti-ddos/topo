@@ -19,9 +19,13 @@ if __name__ == '__main__':
     for i in [5]:
         net.cmd('h{}'.format(i), 'sudo python3 -u -m http.server 80 > log/httpd.log 2>&1 &')
     # start http client at h1-h5
-    send_interval = [0.6, 5, 0.6, 0.6] # http request send interval for h1-h4
+    send_interval = [1, 5, 2, 3] # http request send interval for h1-h4
     for i in [1, 2, 3, 4]:
         start_delay = i
         net.cmd('h{}'.format(i), 'sudo python3 random_http_request.py {} {} &'.format(start_delay, send_interval[i-1]))
+    
+    dns_bg_send_interval = 6
+    for i in [1, 2, 3, 6]:
+        net.cmd('h{}'.format(i), 'sudo python3 random_dns_request.py {} &'.format(dns_bg_send_interval))
     CLI(net)
     net.stop()
